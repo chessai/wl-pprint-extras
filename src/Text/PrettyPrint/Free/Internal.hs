@@ -129,8 +129,8 @@ import Data.String
 import Data.Foldable hiding (fold)
 import Data.Traversable
 import Data.Bifunctor
-import Data.Functor.Apply
-import Data.Functor.Bind
+import Data.Functor.Semiapplicative
+import Data.Functor.Semimonad
 import Data.Functor.Plus
 import Data.Int
 import Data.Word
@@ -786,7 +786,7 @@ instance Functor (Doc a) where
 instance Bifunctor Doc where
   bimap f g = docLeafyRec (Effect . g) (Annotate . f)
 
-instance Apply (Doc a) where
+instance Semiapplicative (Doc a) where
   (<.>) = ap
 
 instance Applicative (Doc a) where
@@ -796,7 +796,7 @@ instance Applicative (Doc a) where
 annotate :: a -> Doc a e -> Doc a e
 annotate = Annotate
 
-instance Bind (Doc a) where
+instance Semimonad (Doc a) where
   (>>-) = (>>=)
 
 instance Monad (Doc a) where
